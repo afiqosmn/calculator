@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -144,6 +143,16 @@ public class Calculator {
                             else {
                                 displayLabel.setText(displayLabel.getText() + buttonValue);
                                 
+                            }
+                        }
+                        else if (buttonValue == "√") {
+                            if (displayLabel.getText() == "0") {
+                                displayLabel.setText("0");
+                            }
+                            else {
+                                double numDisplay = Double.parseDouble(displayLabel.getText());
+                                numDisplay = Math.sqrt(numDisplay);
+                                displayLabel.setText(removeZeroDecimal(numDisplay));
                             }
                         }
                     }
