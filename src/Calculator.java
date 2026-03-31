@@ -5,8 +5,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 public class Calculator {
-    int boardWidth = 360;
-    int boardHeight = 540;
+    int boardWidth = 500;
+    int boardHeight = 600;
 
     Color customLightGray = new Color (212,212,210);
     Color customDarkGray = new Color (80,80,80);
@@ -14,15 +14,17 @@ public class Calculator {
     Color customOrange = new Color (255, 149, 0);
 
     String[] buttonValues = {
-        "AC", "+/-", "%", "÷", 
-        "7", "8", "9", "×", 
+        "%","CE","AC","←",
+        "1/x","x²","√","÷",
+        "7", "8", "9", "×",
         "4", "5", "6", "-",
         "1", "2", "3", "+",
-        "0", ".", "√", "="
+        " +/-","0", ".", "="
     };
 
-    String[] rightSymbols = {"÷", "×", "-", "+", "="};
-    String[] topSymbols = {"AC", "+/-", "%"};
+    String[] rightSymbols = {"←","÷", "×", "-", "+", "="};
+    String[] topSymbols = {"%","CE","AC"};
+    String[] bottomSymbols = {"1/x","x²","√"};
 
     JFrame frame = new JFrame("Calculator");
     JLabel displayLabel = new JLabel();
@@ -38,7 +40,7 @@ public class Calculator {
         //frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -53,14 +55,14 @@ public class Calculator {
         displayPanel.add(displayLabel);
         frame.add(displayPanel, BorderLayout.NORTH);
 
-        buttonsPanel.setLayout(new GridLayout(5, 4));
+        buttonsPanel.setLayout(new GridLayout(6, 4));
         buttonsPanel.setBackground(customBlack);
         frame.add(buttonsPanel);
 
         for (int i = 0; i < buttonValues.length; i++) {
             JButton button = new JButton();
             String buttonValue = buttonValues[i];
-            button.setFont(new Font("Arial", Font.PLAIN, 30));
+            button.setFont(new Font("Arial", Font.PLAIN, 25));
             button.setText(buttonValue);
             button.setFocusable(false);
             button.setBorder(new LineBorder(customBlack));
