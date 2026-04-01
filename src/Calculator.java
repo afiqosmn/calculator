@@ -12,6 +12,7 @@ public class Calculator {
     Color customDarkGray = new Color (80,80,80);
     Color customBlack = new Color (28,28,28);
     Color customOrange = new Color (255, 149, 0);
+    Color customSecLabel = new Color (92,92,92);
 
     String[] buttonValues = {
         "%","CE","AC","←",
@@ -36,6 +37,7 @@ public class Calculator {
     String A = "0";
     String operator = null;
     String B = null;
+    String secString = "";
 
     Calculator() {
         //frame.setVisible(true);
@@ -53,8 +55,8 @@ public class Calculator {
         displayLabel.setOpaque(true);
 
         secLabel.setBackground(customBlack);
-        secLabel.setForeground(customDarkGray);
-        secLabel.setFont(new Font("Arial", Font.PLAIN, 25));
+        secLabel.setForeground(customSecLabel);
+        secLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         secLabel.setHorizontalAlignment(JLabel.RIGHT);
         secLabel.setText("0");
         secLabel.setOpaque(true);
@@ -110,6 +112,7 @@ public class Calculator {
                                 
                                 if (operator == "+") {
                                     displayLabel.setText(removeZeroDecimal(numA + numB));
+                                    //secLabel.setText(secLabel.getText() + displayLabel.getText());
                                 }
                                 else if (operator == "-") {
                                     displayLabel.setText(removeZeroDecimal(numA - numB));
@@ -119,17 +122,22 @@ public class Calculator {
                                 }
                                 else if (operator == "÷") {
                                     displayLabel.setText(removeZeroDecimal(numA / numB));
-                                }                            
+                                }
+                                secLabel.setText(secString);                           
                                 clearAll();
                             }
                         }
                         else if ("+-×÷√".contains(buttonValue)) {
                             if (operator == null) {
                                 A = displayLabel.getText();
-                                displayLabel.setText("0");
-                                B = "0";
+                                /*displayLabel.setText("0");
+                                B = "0";*/
                             }
                             operator = buttonValue;
+                            secString = secString + "" + buttonValue + "";
+                            secLabel.setText(secString);
+
+                            displayLabel.setText("0");
                         }
                     }
                     else if (Arrays.asList(topSymbols).contains(buttonValue)) {
@@ -137,6 +145,8 @@ public class Calculator {
                             double numDisplay = Double.parseDouble(displayLabel.getText());
                             numDisplay /= 100;
                             displayLabel.setText(removeZeroDecimal(numDisplay));
+                            secString = secString + buttonValue;
+                            secLabel.setText(secString);
                         }
                         else if (buttonValue == "CE") {
                             clearEntry();
@@ -155,6 +165,8 @@ public class Calculator {
                                 double numDisplay = Double.parseDouble(displayLabel.getText());
                                 numDisplay = 1/numDisplay;
                                 displayLabel.setText(removeZeroDecimal(numDisplay));
+                                secString = "1/" + secString;
+                                secLabel.setText(secString);
                             }
                         }
                         else if (buttonValue == "x²") {
@@ -165,6 +177,8 @@ public class Calculator {
                                 double numDisplay = Double.parseDouble(displayLabel.getText());
                                 numDisplay = Math.pow(numDisplay, 2);
                                 displayLabel.setText(removeZeroDecimal(numDisplay));
+                                secString = secString + "²";
+                                secLabel.setText(secString);
                             }
                         }
                         else if (buttonValue == "√") {
@@ -175,6 +189,8 @@ public class Calculator {
                                 double numDisplay = Double.parseDouble(displayLabel.getText());
                                 numDisplay = Math.sqrt(numDisplay);
                                 displayLabel.setText(removeZeroDecimal(numDisplay));
+                                secString = secString + buttonValue;
+                                secLabel.setText(secString);
                             }
                         }
                     }
@@ -197,12 +213,18 @@ public class Calculator {
                         else if ("0123456789".contains(buttonValue)) {
                             if (displayLabel.getText() == "0") {
                                 displayLabel.setText(buttonValue);
+                                if (secString != null) {
+                                    secString = secString + buttonValue;
+                                }
+                                else {
+                                    secString = buttonValue;
+                                }
                             }
                             else {
                                 displayLabel.setText(displayLabel.getText() + buttonValue);
-                                secLabel.setText(displayLabel.getText() + buttonValue);
-                                
+                                secString = secString + buttonValue;                                
                             }
+                            secLabel.setText(secString);
                         }
                     }
                 }
@@ -215,10 +237,15 @@ public class Calculator {
         A = "0";
         operator = null;
         B = null;
+        
     }
 
     void clearEntry() {
         displayLabel.setText("0");
+        secLabel.setText("0");
+        secString = "";
+        A = "0";
+        operator = null;
         B = null;
     }
 
